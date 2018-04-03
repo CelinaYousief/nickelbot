@@ -1,2 +1,2 @@
 # nickelbot
-Nickelback haiku bot
+A Nickelback haiku bot
