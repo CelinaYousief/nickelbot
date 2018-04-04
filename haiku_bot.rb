@@ -12,8 +12,10 @@ def markov_it(original_text)
         nxt = original_text[i+1]
         
         if markov_hash.include? word
+            #if word is already a key in markov hash and doesnt equal nil, add it the attatched list (value)
             markov_hash[word] << nxt unless nxt.nil?
         else
+            #if word is not already in markov hash, create a new key with that word then add the next word to attatched list (value)
             markov_hash[word] ||=[]
             markov_hash[word] << nxt unless nxt.nil?
         end
@@ -26,11 +28,17 @@ end
 #---------------------------------------------------------------------
 def syllable_count(words)
     
+    #count = total syllables for words
     count = 0
 
     words.each do |word|
+        #tmp_count = total syllables for word
         tmp_count = 0
+
+        #add 1 for every vowel in word
         tmp_count = tmp_count + word.scan(/[aeiouy]/i).size
+
+        #minus 1 for every dipthong or tripthong in word or if word ends in es or ed or e
         tmp_count = tmp_count - word.scan(/(?:[aeiouy][aeiouy][aeiouy]|([aeiouy][aeiouy]))/i).size
         tmp_count = tmp_count - word.scan(/(?:[^laeiouy]es\b|ed\b|([^laeiouy]e\b))/i).size
        
@@ -48,6 +56,7 @@ def generate(markoved_text,length,last_word = " ")
     line_list = Array.new
     caps = Array.new
     
+    #for each key, check if it is Capitalized (beginning of sentence) and add it to caps array
     markoved_text.each_key do |key|
         if key[0] =~ /[A-Z]/
             caps << key 
@@ -55,8 +64,10 @@ def generate(markoved_text,length,last_word = " ")
     end
     
     if last_word == " "
+        #if its the first line, select first word from caps
         curr_word = caps.sample
     else
+        #otherwise pick from value of the last word (key)
         curr_word = markoved_text[last_word].sample
     end
 
@@ -86,6 +97,7 @@ def generate(markoved_text,length,last_word = " ")
 end
 #-----------------------------------------------------------------------
 def get_text
+    #get text from nick.txt file
 
     file = File.open("nick.txt", "r")
     raw_text = file.read
@@ -97,6 +109,7 @@ def get_text
 end
 #----------------------------------------------------------------------
 def haiku_gen
+    #generate the haiku from all the lines
 
     og_text = get_text
     markoved_text = markov_it(og_text)
@@ -124,7 +137,8 @@ end
 #---------------------------------------------------------------------
 
 def post(haiku)
-    
+    #connect to twitter API and post
+
     client = Twitter::REST::Client.new do |config|
         config.consumer_key = ""
         config.consumer_secret = ""
