@@ -3,7 +3,6 @@
 
 require 'twitter'
 
-#--------------------------------------------------------------------
 def markov_it(original_text)
     markov_hash = Hash.new     
 
@@ -25,7 +24,7 @@ def markov_it(original_text)
     return markov_hash
 
 end
-#---------------------------------------------------------------------
+
 def syllable_count(words)
     
     #count = total syllables for words
@@ -49,7 +48,7 @@ def syllable_count(words)
 
     return count
 end
-#-----------------------------------------------------------------------
+
 def generate(markoved_text,length,last_word = " ")
 
     curr_word = " "
@@ -95,7 +94,7 @@ def generate(markoved_text,length,last_word = " ")
     return generate(markoved_text, length, last_word)
 
 end
-#-----------------------------------------------------------------------
+
 def get_text
     #get text from nick.txt file
 
@@ -107,7 +106,7 @@ def get_text
     return out_array
 
 end
-#----------------------------------------------------------------------
+
 def haiku_gen
     #generate the haiku from all the lines
 
@@ -134,7 +133,6 @@ def haiku_gen
 
 
 end
-#---------------------------------------------------------------------
 
 def post(haiku)
     #connect to twitter API and post
